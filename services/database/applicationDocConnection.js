@@ -64,6 +64,8 @@ const getApplications = async (appPropertyId) => {
   return applicantUserIds;
 }
 
+
+
 const removeApplicant = async (appUserId, appPropertyId) => {
 
     let query = {propertyId: appPropertyId};
@@ -97,5 +99,9 @@ const removeProperty = async (appPropertyId) => {
     return success;
 }
 
+const getapplicantWithCriteria = async (applicationCriteria) => {
+    let applications = await activeApplicationModel.find(applicationCriteria);
+    return applications;
+}
 
-module.exports = {insertInitialApplication, removeApplicant, removeProperty, getApplications, addApplication}
+module.exports = {insertInitialApplication, removeApplicant, removeProperty, getApplications, addApplication, getapplicantWithCriteria}

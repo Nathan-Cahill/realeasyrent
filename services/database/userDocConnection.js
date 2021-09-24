@@ -19,6 +19,11 @@ const getUserWithId = async (userId) => {
     return user;
 }
 
+const getUserWithCriteria = async (userCriteria) => {
+    let user = await userModel.find(userCriteria);
+    return user;
+}
+
 
 const insertUser = async (userData)=>{
     
@@ -57,4 +62,4 @@ const updateUser = async (user) => {
 
 }
 
-module.exports = {insertUser, getUserWithId, getUserWithPersonalInfoQuery, getAllUsersWithPersonalInfoQuery, updateUser}
+module.exports = {insertUser, getUserWithId, getUserWithPersonalInfoQuery, getAllUsersWithPersonalInfoQuery, updateUser, getUserWithCriteria}

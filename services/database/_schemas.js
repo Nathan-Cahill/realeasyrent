@@ -60,7 +60,8 @@ const renterProfile = new mongoose.Schema({
 
 const activeApplication = new mongoose.Schema({
     propertyId: String,
-    applicants: [String]
+    applicants: [String],
+    timestamp : true,
 })
 
 const property = new mongoose.Schema({
@@ -94,5 +95,14 @@ const property = new mongoose.Schema({
 
 })
 
+const supportTicket = new mongoose.Schema({
+    ticketId: String,
+    timestamp : true,
+    issueDescription : String,
+    urgency : String,
+    supportStatus : String, //active, incomplete
 
-module.exports = {user, renterProfile, activeApplication, property}
+})
+
+
+module.exports = {user, renterProfile, activeApplication, property, supportTicket}
