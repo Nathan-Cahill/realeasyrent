@@ -20,7 +20,7 @@ let http = require('http').createServer(app);
 const io = socketio();
 
 var sockets = require('./util/sockets');
-sockets.connect(io);
+//sockets.connect(io);
 
 
 

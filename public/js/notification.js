@@ -1,12 +1,16 @@
-var socket = io();
-
+const io = require('socket.io');
 const socket = io();
+
+
+const message = String;
 const setUserId = (argUserId) => { userId = argUserId;}
 
-socket.on(id, function (message) { 
 
-  console.log(message);
+socket.on(message ,function (message) { 
+  console.log(id,message);
+  socket.emit(id, message);
 });
+
 
 
 
@@ -28,4 +32,6 @@ socket.on(id, function (message) {
 //   }))
 
 
-
+module.exports = {
+setUserId
+}

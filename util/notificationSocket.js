@@ -48,7 +48,7 @@ const showMessage = (message) =>{
     } ,3000);
    }
 }
-document.addEventListener('DOMContentLoaded', ()=> Toast.init());
+//document.addEventListener('DOMContentLoaded', ()=> Toast.init());
 
 const socket = io();
 

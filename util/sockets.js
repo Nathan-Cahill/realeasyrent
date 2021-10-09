@@ -1,7 +1,9 @@
-const formatMessage = require('./util/messages');
-const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users');
-// const {numberGen} = require('./utils/randomnumber');
+const formatMessage = require('../util/messages');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('../util/users');
 
+const socketio = require('socket.io');
+// const {numberGen} = require('./utils/randomnumber');
+const io = socketio();
 const botName = 'Support Bot';
 
 //Display when someone connects
