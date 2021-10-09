@@ -15,6 +15,8 @@ let Service = require('../../services');
 const createUser = async (req, res) => { 
     try {
         let data = req.body;
+        let flag = true;
+        let errorMessage = "";
 
         //set to false if a user can be retrieved with the given email
 
@@ -28,8 +30,13 @@ const createUser = async (req, res) => {
         //validation - make sure all required user information is not empty or null
         for (var key in userData){
             if (userData[key] == null || typeof(userData[key]) == 'undefined' || userData[key].toString().length == 0){
-                res.status(400).send(`User was not created - missing user information for ${key}.`)
+                flag = false;
+                errorMessage += `User was not created - missing user information for ${key}.`;
             }
+        }
+
+        if (!flag){
+            res.status(400).send(errorMessage);
         }
 
         //Validate no existing user
