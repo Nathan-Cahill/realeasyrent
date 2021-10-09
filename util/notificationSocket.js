@@ -2,10 +2,10 @@ const { eventNames } = require('process');
 const io = require('socket.io');
 
 
-const receiver = (message) => {
+const receiver = (message, id) => {
   
-  console.log(message);
-    socket.emit('notification', message);
+  console.log(message, id);
+    socket.emit(id, message);
 }
 
 //toast notifications
