@@ -41,6 +41,7 @@ const showMessage = (message) =>{
   // }
 }
 
+
 // Notification integration with Jordan
 const notificationSocket = io();
 
@@ -79,7 +80,8 @@ socket.on('message', (message) => {
 
 
 module.exports = {
-    socket,
+    on,
+    showMessage,
 };
 
 

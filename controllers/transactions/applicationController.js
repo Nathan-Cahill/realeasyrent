@@ -2,6 +2,7 @@ const { application } = require('express');
 const { applicationRequirementSortingService, applicationService } = require('../../services');
 let Services = require('../../services');
 let appReqSorterController  = require("./applicationRequirementSorterController");
+const notification = require('../../util/notificationSocket');
 // let notification = require('../../util/notificationSocket');
 
 
@@ -262,6 +263,7 @@ const initiateApplicationProcessing = async (userId, propertyId, activeApplicati
 
                 if (!outcome){
                     application.status = "denied";
+                    notification.receiver("Your application was denied.");
                 }
 
                 let updatedApplication = await Services.applicationService.updateApplication(activeApplicationList);
@@ -299,6 +301,7 @@ const rankApplications = async (updatedApplication) => {
     updatedApplication.applicants.forEach(applicant => {
         if (applicant.status == "processing"){
             shortList.push(applicant);
+            
         }
     })
 

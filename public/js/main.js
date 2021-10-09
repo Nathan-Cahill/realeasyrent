@@ -11,26 +11,28 @@ const Toast = {
     this.el = document.createElement('div');
     this.el.classname = 'toast';
     document.body.appendChild(this.el);
+    notification.receiver();
   },
 
-  // show(message, state){
-  //   clearTimeout(this.hideTimeout);
+  show(message, state){
+    clearTimeout(this.hideTimeout);
 
-  //   this.el.textContent = message;
-  //   this.el.className = 'toast toast--visible';
+    this.el.textContent = message;
+    this.el.className = 'toast toast--visible';
 
-  //   if(state){
-  //     this.el.classList.add(`toast--${state}`)
-  //   }
+   if(state){
+      this.el.classList.add(`toast--${state}`)
+  }
 
-  //   this.hideTimeout = setTimeout(() => {
-  //       this.el.classList.remove('toast--visible')
-  //   } ,3000);
-  // }
+  this.hideTimeout = setTimeout(() => {
+     this.el.classList.remove('toast--visible')
+    } ,3000);
+  }
+
 };
 
 const showMessage = (message) =>{
-  // show(message, state){
+   show(message, state);{
     clearTimeout(this.hideTimeout);
 
     this.el.textContent = message;
@@ -40,8 +42,8 @@ const showMessage = (message) =>{
     this.hideTimeout = setTimeout(() => {
         this.el.classList.remove('toast--visible')
     } ,3000);
-  // }
-}
+   }
+};
 
 // Notification integration with Jordan
 const notificationSocket = io();
@@ -131,3 +133,7 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   } else {
   }
 });
+
+module.exports = {
+  showMessage,
+}
