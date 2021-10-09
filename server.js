@@ -106,23 +106,7 @@ io.on('connection', socket => {
  
 });
 
-app.post('/test/:api', async (req, res) => {
-  let api = req.params.api;
-  switch(api){
-    
-    case 'user':
-      let Controller = require('./controllers/users/userController')
 
-      req.body = {
-        firstName: "",
-        lastName: "Simpson",
-        email: "eatmy@shorts.com",
-        postcode: 3000
-      };
-
-      Controller.createUser(req, res);
-    }
-  });
 http.listen(port,()=>{
   console.log("Listening on port ", port);
 });
