@@ -1,9 +1,11 @@
-const connect = (serverIO)=>{
-// const io = socketio(server);
-const io = serverIO;
+const formatMessage = require('./util/messages');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users');
+// const {numberGen} = require('./utils/randomnumber');
+
+const botName = 'Support Bot';
 
 //Display when someone connects
- io.on('connection', socket => {
+io.on('connection', socket => {
     socket.on('joinRoom', ({username, room})=> {
         const user = userJoin(socket.id, username, room);
 
@@ -36,12 +38,6 @@ const io = serverIO;
     io.to(user.room).emit('message', formatMessage(user.username, msg));
    });
 
-   io.on("connection", (socket) => {
-    socket.on("hello", (arg) => {
-      console.log(arg); // world
-    });
-  });
-
     //This runs when client disconnects
     socket.on('disconnect', ()=>{
         const user = userLeave(socket.id);
@@ -64,6 +60,3 @@ const io = serverIO;
      });
  
 });
-};
-
-module.exports = {connect};
