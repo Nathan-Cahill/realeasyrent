@@ -10,13 +10,15 @@ app.use(express.urlencoded({ extended: false }))
 // socket chatroom integration
 
 const socketio = require('socket.io');
-const formatMessage = require('./utils/messages');
-const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
+const formatMessage = require('./util/messages');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./util/users');
 
 // let dbConnection = require('./dbConnection.js');
 
+
 let http = require('http').createServer(app);
-const io = socketio(server);
+//const server = http.createServer(app);
+const io = socketio();
 
 var sockets = require('./util/sockets');
 sockets.connect(io);

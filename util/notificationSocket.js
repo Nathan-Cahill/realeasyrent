@@ -51,25 +51,25 @@ notificationSocket.on('toast toast--visible', message =>{
   
 });
 
-document.addEventListener('DOMContentLoaded', ()=> Toast.init());
+//document.addEventListener('DOMContentLoaded', ()=> Toast.init());
 
 
 const socket = io();
 
-//receiving message from Jordans end
-io.on('connection', function (socket) {
-    messages.forEach(function (data) {
-      socket.emit('message', data);
-    });
-    socket.on('message', function (msg) {
-      var text = String(msg || '');
+// //receiving message from Jordans end
+// //io.on('connection', function (socket) {
+//     messages.forEach(function (data) {
+//       socket.emit('message', data);
+//     });
+//     socket.on('message', function (msg) {
+//       var text = String(msg || '');
 
-      if (!text)
-        return;
-        broadcast('message', data);
-        messages.push(data);
-      });
-    });
+//       if (!text)
+//         return;
+//         broadcast('message', data);
+//         messages.push(data);
+//       });
+//     });
 
 // Message from server
 socket.on('message', (message) => {
@@ -79,10 +79,10 @@ socket.on('message', (message) => {
   
 
 
-module.exports = {
-    on,
-    showMessage,
-};
+// module.exports = {
+//     on,
+//     showMessage,
+// };
 
 
 

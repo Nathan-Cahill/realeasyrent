@@ -1,3 +1,5 @@
+const { getUserWithUserId } = require("../../services/users/userService");
+
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
