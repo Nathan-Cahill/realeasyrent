@@ -1,6 +1,13 @@
 const { eventNames } = require('process');
 const io = require('socket.io');
 
+
+const receiver = (message) => {
+  
+  console.log(message);
+    socket.emit('notification', message);
+}
+
 //toast notifications
 const Toast = {
   init(){
@@ -79,10 +86,10 @@ socket.on('message', (message) => {
   
 
 
-// module.exports = {
-//     on,
-//     showMessage,
-// };
+  module.exports = {
+    socket, 
+    receiver
+};
 
 
 

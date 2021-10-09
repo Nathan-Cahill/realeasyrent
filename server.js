@@ -4,6 +4,7 @@ var express = require("express");
 var app = express();
 
 
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -23,7 +24,7 @@ const io = socketio();
 var sockets = require('./util/sockets');
 sockets.connect(io);
 
-
+var notifications = require('./public/js/notification');
 
 
 var port = process.env.PORT || 3000;

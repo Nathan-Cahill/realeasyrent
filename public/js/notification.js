@@ -18,7 +18,6 @@ const setUserId = (argUserId) => { userId = argUserId;}
 socket.on(`${userId}`, function(message){
 
 console.log(message);
-
 },
 
 $.ajax({
