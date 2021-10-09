@@ -3,14 +3,20 @@ var dbConnection = require('./services/database/dbConnection')
 var express = require("express");
 var app = express();
 
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// socket chatroom integration
+const express = require('express');
+const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
 
 // let dbConnection = require('./dbConnection.js');
 
 let http = require('http').createServer(app);
-let io = require('socket.io')(http);
+const io = socketio(server);
 
 var sockets = require('./util/sockets');
 sockets.connect(io);
@@ -40,30 +46,65 @@ app.use('/filter/application_requirements', applicationRequirementSorter);
 
 
 
-//socket test
-io.on('connection', (socket) => {
-  console.log('a user connected' + (socket.id));
-  socket.broadcast.emit('hi');
-  socket.on('disconnect', () => {
-      console.log('user disconnected');
-  });
+//Sockets extended inputs
+const botName = 'Support Bot';
+
+//Display when someone connects
+io.on('connection', socket => {
+    socket.on('joinRoom', ({username, room})=> {
+        const user = userJoin(socket.id, username, room);
+
+        socket.join(user.room);
+        
+    //Tell single client that is connecting = personal message
+    socket.emit('message', formatMessage(botName, 'Welcome to Lets Chat Support! Please wait while we connect you to support staff...'));
+
+    //Tell everyone a client has connected except the client connecting
+    socket.broadcast
+    .to(user.room)
+    .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
+    //Send users and room info
+    io.to(user.room).emit('roomUsers',{
+         room: user.room,
+         users: getRoomUsers(user.room)
+        });
+  
+    });
+
 
   
-socket.on('chat message', (msg) => {
-  console.log('message: ' + msg);
- io.emit('chat message', msg);
- });
-});
+   //listen for chatMessage
+   socket.on('chatMessage', (msg)=>{
+    const user = getCurrentUser(socket.id);
 
-// socket.on("send-notification", function () {
-  // io.broadcast.emit("new-notification", data);
- // socket.broadcast.emit("new-notification", data);
-//})
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
+   });
 
-//instrument(io, {auth: false})
+    //This runs when client disconnects
+    socket.on('disconnect', ()=>{
+        const user = userLeave(socket.id);
+
+        if(user){
+            //Tells everyone a client has connected including client connecting
+            io.to(user.room).emit(
+                'message', 
+                formatMessage(botName, `${user.username} has left the chat`)) 
+        };
+
+        //Send users and room info
+        io.to(user.room).emit('roomUsers',{
+            room: user.room,
+            users: getRoomUsers(user.room)
+           });
+
+        
+       
+     });
  
-//io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' });
-
+});
 
 http.listen(port,()=>{
   console.log("Listening on port ", port);
